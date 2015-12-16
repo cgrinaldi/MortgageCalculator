@@ -32,10 +32,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         include: path.join(__dirname, 'src', 'js'),
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015','react','stage-0']
-        }
+        loader: 'react-hot!babel',
       },
       {
         test: /\.html$/,
