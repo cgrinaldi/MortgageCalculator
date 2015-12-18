@@ -2,7 +2,7 @@ import {expect} from 'chai';
 
 import {calcDownpayment, calcLoanAmt,
         calcMonthlyMortgagePayment,
-        calcMonthlyPITI} from  '../src/js/calculations/piti.js';
+        calcMonthlyPITI, calcFrontendDTI} from  '../src/js/calculations/piti.js';
 
 import {MI_PREM_035, MI_PREM_10, PRODUCT_035, PRODUCT_10,
         PRODUCT_20, PRODUCT_REX} from '../src/js/constants/MortgageConstants';
@@ -15,6 +15,7 @@ describe('PITI and Cash Required', () => {
     propertyInsuranceRate: 0.003,
     mortgageInterestRate: 0.04
   };
+  const yearlyIncome = 70000;
 
   describe('calcDownpayment()', () => {
 
@@ -68,7 +69,7 @@ describe('PITI and Cash Required', () => {
       const monthlyPITI = calcMonthlyPITIbound(PRODUCT_20);
       expect(+monthlyPITI.toFixed(2)).to.equal(2530.49)
     });
-    
+
     it('should calculate the correct PITI for the REX product', () => {
       const monthlyPITI = calcMonthlyPITIbound(PRODUCT_REX);
       expect(+monthlyPITI.toFixed(2)).to.equal(2530.49);
@@ -76,5 +77,30 @@ describe('PITI and Cash Required', () => {
 
   });
 
+  describe('calcFrontendDTI()', () => {
+
+    const calcFrontendDTIbound = calcFrontendDTI.bind(null, homePrice, rates, yearlyIncome);
+
+    it('should calculate the correct frontend DTI for the 3.5% Down Plus Insurance product', () => {
+      const frontendDTI = calcFrontendDTIbound(PRODUCT_035);
+      expect(+frontendDTI.toFixed(3)).to.equal(0.563);
+    });
+
+    it('should calculate the correct frontend DTI for the 10% Down Plus Insurance product', () => {
+      const frontendDTI = calcFrontendDTIbound(PRODUCT_10);
+      expect(+frontendDTI.toFixed(3)).to.equal(0.503);
+    });
+
+    it('should calculate the correct frontend DTI for the 20% Down product', () => {
+      const frontendDTI = calcFrontendDTIbound(PRODUCT_20);
+      expect(+frontendDTI.toFixed(3)).to.equal(0.434);
+    });
+
+    it('should calculate the correct frontend DTI for the REX product', () => {
+      const frontendDTI = calcFrontendDTIbound(PRODUCT_REX);
+      expect(+frontendDTI.toFixed(3)).to.equal(0.434);
+    });
+
+  });
 
 });
