@@ -6,8 +6,7 @@ module.exports = {
     'webpack-dev-server/client?http://localhost:3000',
     'webpack/hot/only-dev-server',
     './src/js/index.jsx',
-    './src/index.html',
-    './src/styles.scss'
+    './src/index.html'
   ],
 
   output: {
