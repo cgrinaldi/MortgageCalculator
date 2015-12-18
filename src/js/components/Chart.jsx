@@ -2,9 +2,11 @@ import React from 'react';
 import d3 from 'd3';
 import '../../styles/Chart.scss';
 
-const margin = {top: 20, right: 20, bottom: 20, left: 80},
-	fullWidth = 800,
-	fullHeight = 300,
+// TODO: Implement Redux and form controls to update the chart
+
+const margin = {top: 65, right: 20, bottom: 30, left: 100},
+	fullWidth = 600,
+	fullHeight = 350,
 	width = fullWidth - margin.left - margin.right,
 	height = fullHeight - margin.top - margin.bottom;
 
@@ -13,32 +15,35 @@ const ANIM_AXIS_SPEED = 800;
 
 const x = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1)
-    .domain(['a','b','c','d']);
+    .domain(['3.5% Down + MI','10% Down + MI','20% Down','10% Down + REX']);
 
 const y = d3.scale.linear()
 			.range([height, 0])
-      .domain([0, 100]);
+      .domain([0, 4000]); // TOOD: Need to not hard code this
+
+const currencyFormat = d3.format("$,");
 
 const xAxis = d3.svg.axis()
 			.scale(x)
-			.orient("bottom")
-      .ticks(4);
+			.orient("bottom");
 
 const yAxis = d3.svg.axis()
 			.scale(y)
-			.orient("left");
+			.orient("left")
+      .tickFormat(currencyFormat);
+
 
 
 export default React.createClass({
 
-	render() {
-		return (<svg ref="chart"></svg>)
-	},
+  render () {
+    return (
+      <svg ref="chart"></svg>
+    );
+  },
 
 	shouldComponentUpdate({data}){
-		// x.domain([0,data.length-1]) // x domain won't change for the calculator
 		y.domain([0,d3.max(data, d => d.y)]);
-		// xAxis.ticks(Math.min(data.length,30))
 
 		var svg=d3.select(this.refs.chart)
 			.select("g");
@@ -54,6 +59,17 @@ export default React.createClass({
         .attr('width', x.rangeBand())
         .attr('y', d => y(d.y))
         .attr('height', d => height - y(d.y));
+
+    var labels = svg.selectAll('.text-label')
+        .data(data);
+
+    labels
+      .transition()
+      .duration(ANIM_BAR_SPEED)
+      .ease('back-out')
+        .text(d => currencyFormat(d.y))
+        .attr('x', d => x(d.x) + x.rangeBand()/2)
+        .attr('y', d => y(d.y) - 5)
 
     // This shouldn't be updating with the calculator
 		svg.select(".x.axis")
@@ -72,32 +88,32 @@ export default React.createClass({
 	componentDidMount() {
     // The 'g' element we are adding below is the grouping for the entire chart
 		d3.select(this.refs.chart)
-			.attr("width", "100%")
-			.attr("height", "100%")
-			.attr('viewBox',`0 0 ${fullWidth} ${fullHeight}`)
+      .attr("width", fullWidth)
+      .attr("height", fullHeight)
 			.attr('preserveAspectRatio','xMidYMid')
 			.append("g")
 			.attr("transform", `translate(${margin.left},${margin.top})`);
 
 		var {data} = this.props;
-		console.log('data is', data);
 
 		var svg = d3.select(this.refs.chart).select("g");
-
-		// x.domain([0,data.length-1]) // ordinal scale?
-		// y.domain([0,data[0].balance]);
-
-		// xAxis.ticks(Math.min(data.length,30))
 
     // The 'g' element we are adding is for the xAxis
 		svg.append("g")
 			.attr("class", "x axis")
-			.attr("transform", `translate(0,${height})`)
+			.attr("transform", `translate(0,${height+5})`)
 			.call(xAxis);
 
 		svg.append("g")
-			.attr("class", "y axis")
-			.call(yAxis)
+		    .attr("class", "y axis")
+			  .call(yAxis)
+      .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -75)
+        .attr("x", -90)
+        .attr("dy", ".71em")
+        .style("text-anchor","end")
+        .text("Monthly PITI");
 
     svg.selectAll('.bar')
         .data(data)
@@ -107,5 +123,23 @@ export default React.createClass({
         .attr('width', x.rangeBand())
         .attr('y', d => y(d.y))
         .attr('height', d => height - y(d.y));
+
+    svg.selectAll('.text-label')
+        .data(data)
+      .enter().append('text')
+        .attr('class', 'text-label')
+        .text( d => currencyFormat(d.y))
+        .attr('x', d => x(d.x) + x.rangeBand()/2)
+        .attr('y', d => y(d.y) - 5);
+
+    // Adding the title
+    svg.append('text')
+        .attr('x', width / 2)
+        .attr('y', 0 - margin.top / 2)
+        .attr('text-anchor', 'middle')
+        .style('font-size', '22px')
+        .style('font-weight', 'bold')
+        .style('fill', '#333')
+        .text('Monthly PITI');
 	}
 });

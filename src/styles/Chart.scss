@@ -2,8 +2,17 @@
 $primary: #428bca;
 $secondary: #ffffff;
 
+.chart {
+  width: 100;
+  height: 100px;
+}
+
 .bar {
   fill: steelblue;
+
+  &:hover {
+    fill: brown;
+  }
 }
 
 .axis {
