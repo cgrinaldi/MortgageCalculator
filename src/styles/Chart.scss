@@ -1,0 +1,15 @@
+/* Chart */
+$primary: #428bca;
+$secondary: #ffffff;
+
+.bar {
+  fill: steelblue;
+}
+
+.axis {
+  path,line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+}

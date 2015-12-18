@@ -1,0 +1,9 @@
+/*Styling Navigation */
+.navbar-default .navbar-nav>li>a:focus {
+  background-color: #eee;
+}
+
+.active {
+  border-bottom: 2px solid #bbb;
+  background-color: #eee;
+}
