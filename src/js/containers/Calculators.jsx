@@ -41,7 +41,10 @@ export const CalcPITI = React.createClass({
     this.updateData();
     return (
       <div>
-        <Chart data={payments} />
+        <Chart
+          data={payments}
+          title={"Monthly PITI"}
+        />
       </div>
     );
   }
