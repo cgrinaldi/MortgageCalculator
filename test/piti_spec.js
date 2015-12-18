@@ -5,7 +5,7 @@ import {calcDownpayment, calcLoanAmt,
         calcMonthlyPITI, calcFrontendDTI} from  '../src/js/calculations/piti.js';
 
 import {MI_PREM_035, MI_PREM_10, PRODUCT_035, PRODUCT_10,
-        PRODUCT_20, PRODUCT_REX} from '../src/js/constants/MortgageConstants';
+        PRODUCT_20, PRODUCT_REX} from './MortgageConstants.js';
 
 describe('PITI and Cash Required', () => {
   const fractionDownpayment = 0.1;
