@@ -16,7 +16,6 @@ export const PRODUCT_20 = {
   MIPrem: 0
 };
 
-
 export const PRODUCT_REX = {
   isREX: true,
   downpaymentFraction: 0.1,

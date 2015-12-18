@@ -14,7 +14,6 @@ export function calcMonthlyMortgagePayment (loanAmt, interestRate) {
   const monthlyRate = interestRate / 12;
   return loanAmt * (monthlyRate * Math.pow(1 + monthlyRate, numMonths)) /
                    (Math.pow(1 + monthlyRate, numMonths) - 1);
-
 }
 
 export function calcMonthlyMIPrem (yearlyMIRate, loanAmt) {
@@ -40,4 +39,9 @@ export function calcMonthlyPITI (homePrice, rates, product) {
   const monthlyPropTaxes = calcMonthlyPropTaxes(rates.propertyTaxRate, homePrice);
   const monthlyPropInsurance = calcMonthlyPropInsurance(rates.propertyInsuranceRate, loanAmt);
   return monthlyMortgage + monthlyMIPrem + monthlyPropTaxes + monthlyPropInsurance;
+}
+
+export function calcFrontendDTI(homePrice, rates, yearlyIncome, product) {
+  const monthlyPITI = calcMonthlyPITI(homePrice, rates, product);
+  return 12 * monthlyPITI / yearlyIncome;
 }
