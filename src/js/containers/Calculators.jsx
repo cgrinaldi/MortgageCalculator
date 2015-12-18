@@ -12,15 +12,32 @@ export const Calculators = React.createClass({
   }
 });
 
+// Temporary data to test the display and animation of the bar chart
 var payments = [
-  {balance: 100000, baseline: 100000, overpayment: 0},
-  {balance: 20000, baseline: 20000, overpayment: 0},
-  {balance: 50000, baseline: 20000, overpayment: 0},
-  {balance: 0, baseline: 0, overpayment: 0}
+  {x: 'a', y: 10},
+  {x: 'b', y: 15},
+  {x: 'c', y: 20},
+  {x: 'd', y: 30}
+];
+
+var newPayments = [
+  {x: 'a', y: 13},
+  {x: 'b', y: 5},
+  {x: 'c', y: 25},
+  {x: 'd', y: 10}
 ];
 
 export const CalcPITI = React.createClass({
+  updateData () {
+    setTimeout(() => {
+      console.log('changing!');
+      payments = newPayments;
+      this.forceUpdate();
+    }, 2000);
+  },
+
   render () {
+    this.updateData();
     return (
       <div>
         <h1>PITI and Cash Required Calculator</h1>

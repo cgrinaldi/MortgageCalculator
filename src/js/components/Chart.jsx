@@ -7,7 +7,8 @@ const margin = {top: 20, right: 20, bottom: 20, left: 80},
 	width = fullWidth - margin.left - margin.right,
 	height = fullHeight - margin.top - margin.bottom;
 
-const ANIM_SPEED=250;
+const ANIM_BAR_SPEED = 1500;
+const ANIM_AXIS_SPEED = 800;
 
 const x = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1)
@@ -16,14 +17,6 @@ const x = d3.scale.ordinal()
 const y = d3.scale.linear()
 			.range([height, 0])
       .domain([0, 100]);
-
-// const line = d3.svg.line()
-// 			.x((d,i)=>x(i+((d.partial/12)||1)-1))
-// 			.y(d=>y(d.balance));
-//
-// const baseline = d3.svg.line()
-// 			.x((d,i)=>x(i))
-// 			.y(d=>y(d.baseline));
 
 const xAxis = d3.svg.axis()
 			.scale(x)
@@ -47,27 +40,29 @@ export default React.createClass({
 		// xAxis.ticks(Math.min(data.length,30))
 
 		var svg=d3.select(this.refs.chart)
-			.select("g")
-			.transition();
+			.select("g");
 
     var bars = svg.selectAll('.bar')
       .data(data);
 
     bars
       .transition()
-      .duration(ANIM_SPEED)
-      .ease('quad')
+      .duration(ANIM_BAR_SPEED)
+      .ease('back-out')
         .attr('x', d => x(d.x))
         .attr('width', x.rangeBand())
         .attr('y', d => y(d.y))
         .attr('height', d => height - y(d.y));
 
+    // This shouldn't be updating with the calculator
 		svg.select(".x.axis")
-			.duration(ANIM_SPEED)
+      .transition()
+			.duration(ANIM_AXIS_SPEED)
 			.call(xAxis);
 
 		svg.select(".y.axis")
-			.duration(ANIM_SPEED)
+      .transition()
+			.duration(ANIM_AXIS_SPEED)
 			.call(yAxis);
 
 		return false;
@@ -111,15 +106,5 @@ export default React.createClass({
         .attr('width', x.rangeBand())
         .attr('y', d => y(d.y))
         .attr('height', d => height - y(d.y));
-
-		// svg.append("path")
-		// 	.datum(data)
-		// 	.attr("class", "line baseline")
-		// 	.attr("d", baseline);
-    //
-		// svg.append("path")
-		// 	.datum(data)
-		// 	.attr("class", "line overpayline")
-		// 	.attr("d", line);
 	}
 });
