@@ -33,7 +33,7 @@ export const CalcPITI = React.createClass({
     setTimeout(() => {
       console.log('changing!');
       payments = newPayments;
-      this.forceUpdate();
+      // this.forceUpdate();
     }, 2000);
   },
 
@@ -44,6 +44,7 @@ export const CalcPITI = React.createClass({
         <Chart
           data={payments}
           title={"Monthly PITI"}
+          yAxisLabel={"Monthly PITI"}
         />
       </div>
     );

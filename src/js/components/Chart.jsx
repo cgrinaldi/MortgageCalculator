@@ -17,6 +17,12 @@ const currencyFormat = d3.format("$,");
 
 export default React.createClass({
 
+  propTypes: {
+    data: React.PropTypes.array.isRequired,
+    title: React.PropTypes.string.isRequired,
+    yAxisLabel: React.PropTypes.string.isRequired
+  },
+
   render () {
     return (
       <svg ref="chart"></svg>
@@ -62,7 +68,7 @@ export default React.createClass({
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    var {data, title} = this.props;
+    var {data, title, yAxisLabel} = this.props;
 
     var svg = d3.select(this.refs.chart).select("g");
 
@@ -81,7 +87,7 @@ export default React.createClass({
         .attr("x", -90)
         .attr("dy", ".71em")
         .style("text-anchor","end")
-        .text("Monthly PITI");
+        .text(yAxisLabel);
 
     svg.selectAll('.bar')
         .data(data)
