@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {calcDownpayment} from '../calculations/piti';
+import {calcDownpayment, calcMonthlyPITI, calcFrontendDTI} from '../calculations/piti';
 
 import Chart from '../components/Chart';
 
@@ -21,8 +21,20 @@ var newPayments = [
 
 export const CalcPITI = React.createClass({
 
+  calculateMonthlyPITI () {
+    const {homePrice, rates, products} = this.props;
+    const calcMonthlyPITIBound = calcMonthlyPITI.bind(null, homePrice, rates);
+    var productsMonthlyPITI = products.map((product) => {
+      return {
+        x: product.name,
+        y: calcMonthlyPITIBound(product)
+      };
+    });
+    return productsMonthlyPITI;
+  },
+
   calculateDownpayments () {
-    const {homePrice, rates, householdIncome, products} = this.props;
+    const {homePrice, products} = this.props;
     const calcDownpaymentBound = calcDownpayment.bind(null, homePrice);
     var downpayments = products.map((product) => {
       return {
@@ -33,13 +45,35 @@ export const CalcPITI = React.createClass({
     return downpayments;
   },
 
+  calculateFrontendDTI () {
+    const {homePrice, rates, householdIncome, products} = this.props;
+    const calcFrontendDTIBound = calcFrontendDTI.bind(null, homePrice, rates, householdIncome);
+    var productsFrontendDTIs = products.map((product) => {
+      return {
+        x: product.name,
+        y: calcFrontendDTIBound(product)
+      };
+    });
+    return productsFrontendDTIs;
+  },
+
   render () {
     return (
       <div>
         <Chart
-          data={this.calculateDownpayments()}
+          data={this.calculateMonthlyPITI()}
           title={"Monthly PITI"}
           yAxisLabel={"Monthly PITI"}
+        />
+        <Chart
+          data={this.calculateDownpayments()}
+          title={"Down Payment"}
+          yAxisLabel={"Down Payment"}
+        />
+        <Chart
+          data={this.calculateFrontendDTI()}
+          title={"Front End DTI"}
+          yAxisLabel={"Front End DTI"}
         />
       </div>
     );
