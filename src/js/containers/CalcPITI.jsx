@@ -1,17 +1,6 @@
 import React from 'react';
-import '../../styles/App.scss';
 
 import Chart from '../components/Chart';
-
-export const Calculators = React.createClass({
-  render () {
-    return (
-      <div>
-        {this.props.children}
-      </div>
-    );
-  }
-});
 
 // Temporary data to test the display and animation of the bar chart
 var payments = [
@@ -28,7 +17,7 @@ var newPayments = [
   {x: '10% Down + REX', y: 3300}
 ];
 
-export const CalcPITI = React.createClass({
+export default React.createClass({
   updateData () {
     setTimeout(() => {
       console.log('changing!');
@@ -47,14 +36,6 @@ export const CalcPITI = React.createClass({
           yAxisLabel={"Monthly PITI"}
         />
       </div>
-    );
-  }
-});
-
-export const CalcMaxPurchase = React.createClass({
-  render () {
-    return (
-      <h1>Max Purchase Calculator</h1>
     );
   }
 });
