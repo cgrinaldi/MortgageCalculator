@@ -1,0 +1,1 @@
+export const SET_HOMEPRICE = 'SET_HOMEPRICE';
