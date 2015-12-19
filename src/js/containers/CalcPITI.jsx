@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {calcDownpayment, calcMonthlyPITI, calcFrontendDTI} from '../calculations/piti';
+import * as actionCreators from '../actions/mortgageActions';
 
 import Chart from '../components/Chart';
 
@@ -57,6 +58,15 @@ export const CalcPITI = React.createClass({
     return productsFrontendDTIs;
   },
 
+  handleChange (e) {
+    if (this.waiting) {
+      clearTimeout(this.waiting);
+    }
+    this.waiting = setTimeout(() => {
+      this.props.setHomePrice(+e.target.value);
+    }, 500);
+  },
+
   render () {
     return (
       <div>
@@ -75,6 +85,7 @@ export const CalcPITI = React.createClass({
           title={"Front End DTI"}
           yAxisLabel={"Front End DTI"}
         />
+      <input type="text" placeholder="Enter homeprice" onChange={this.handleChange} />
       </div>
     );
   }
@@ -87,5 +98,6 @@ function mapStateToProps(state) {
 }
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  actionCreators
 )(CalcPITI);
