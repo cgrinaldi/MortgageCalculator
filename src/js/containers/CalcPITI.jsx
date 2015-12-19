@@ -4,21 +4,7 @@ import {calcDownpayment, calcMonthlyPITI, calcFrontendDTI} from '../calculations
 import * as actionCreators from '../actions/mortgageActions';
 
 import Chart from '../components/Chart';
-
-// Temporary data to test the display and animation of the bar chart
-var payments = [
-  {x: '3.5% Down + MI', y: 3944},
-  {x: '10% Down + MI', y: 3518},
-  {x: '20% Down', y: 3037},
-  {x: '10% Down + REX', y: 3037}
-];
-
-var newPayments = [
-  {x: '3.5% Down + MI', y: 4500},
-  {x: '10% Down + MI', y: 3750},
-  {x: '20% Down', y: 3300},
-  {x: '10% Down + REX', y: 3300}
-];
+import Form from '../components/Form';
 
 export const CalcPITI = React.createClass({
 
@@ -58,34 +44,39 @@ export const CalcPITI = React.createClass({
     return productsFrontendDTIs;
   },
 
-  handleChange (e) {
-    if (this.waiting) {
-      clearTimeout(this.waiting);
-    }
-    this.waiting = setTimeout(() => {
-      this.props.setHomePrice(+e.target.value);
-    }, 500);
-  },
-
   render () {
     return (
       <div>
-        <Chart
-          data={this.calculateMonthlyPITI()}
-          title={"Monthly PITI"}
-          yAxisLabel={"Monthly PITI"}
-        />
-        <Chart
-          data={this.calculateDownpayments()}
-          title={"Down Payment"}
-          yAxisLabel={"Down Payment"}
-        />
-        <Chart
-          data={this.calculateFrontendDTI()}
-          title={"Front End DTI"}
-          yAxisLabel={"Front End DTI"}
-        />
-      <input type="text" placeholder="Enter homeprice" onChange={this.handleChange} />
+        <div className="row">
+          <div className="col-md-8">
+            <Chart
+              data={this.calculateMonthlyPITI()}
+              title={"Monthly PITI"}
+              yAxisLabel={"Monthly PITI"}
+            />
+          </div>
+          <div className="col-md-4">
+            <Form {...this.props} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-8">
+            <Chart
+              data={this.calculateDownpayments()}
+              title={"Down Payment"}
+              yAxisLabel={"Down Payment"}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-8">
+            <Chart
+              data={this.calculateFrontendDTI()}
+              title={"Front End DTI"}
+              yAxisLabel={"Front End DTI"}
+            />
+          </div>
+        </div>
       </div>
     );
   }
