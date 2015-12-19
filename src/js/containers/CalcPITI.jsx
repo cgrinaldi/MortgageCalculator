@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {calcDownpayment} from '../calculations/piti';
 
 import Chart from '../components/Chart';
 
@@ -17,21 +19,25 @@ var newPayments = [
   {x: '10% Down + REX', y: 3300}
 ];
 
-export default React.createClass({
-  updateData () {
-    setTimeout(() => {
-      console.log('changing!');
-      payments = newPayments;
-      // this.forceUpdate();
-    }, 2000);
+export const CalcPITI = React.createClass({
+
+  calculateDownpayments () {
+    const {homePrice, rates, householdIncome, products} = this.props;
+    const calcDownpaymentBound = calcDownpayment.bind(null, homePrice);
+    var downpayments = products.map((product) => {
+      return {
+        x: product.name,
+        y: calcDownpaymentBound(product)
+      };
+    });
+    return downpayments;
   },
 
   render () {
-    this.updateData();
     return (
       <div>
         <Chart
-          data={payments}
+          data={this.calculateDownpayments()}
           title={"Monthly PITI"}
           yAxisLabel={"Monthly PITI"}
         />
@@ -39,3 +45,13 @@ export default React.createClass({
     );
   }
 });
+
+function mapStateToProps(state) {
+  return {
+    ...state.pitiCalculator
+  };
+}
+
+export default connect(
+  mapStateToProps
+)(CalcPITI);
