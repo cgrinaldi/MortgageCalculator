@@ -1,19 +1,21 @@
 import React from 'react';
+import d3 from 'd3'
 import {Input} from 'react-bootstrap';
 import '../../styles/Form.scss';
 
+const currencyFormat = d3.format('$,');
+
 export default React.createClass({
   handleChange (action, e) {
-    if (this.waiting) {
-      clearTimeout(this.waiting);
-    }
-    this.waiting = setTimeout(() => {
-      this.props[action](+e.target.value);
-    }, 500);
+    const val = this.processInput(e.target.value);
+    this.props[action](val);
   },
 
-  delayAction (action) {
-    return this.handleChange.bind(null, action);
+  processInput (str) {
+    if (str[0] === '$') {
+      var result = str.replace(/(\$|,)/g, '');
+      return +result;
+    }
   },
 
   render () {
@@ -21,33 +23,38 @@ export default React.createClass({
       <div id="calc-inputs">
         <Input
           type="text"
+          value={currencyFormat(this.props.homePrice)}
           label="Home Price ($)"
           placeholder="Enter the price of the home"
-          onChange={this.delayAction('setHomePrice')}
+          onChange={this.handleChange.bind(null,'setHomePrice')}
         />
         <Input
           type="text"
+          value={currencyFormat(this.props.householdIncome)}
           label="Yearly Household Income ($)"
           placeholder="Enter your yearly household income"
-          onChange={this.delayAction('setIncome')}
+          onChange={this.handleChange.bind(null,'setIncome')}
         />
         <Input
           type="text"
+          value={this.props.rates.mortgageInterestRate}
           label="Mortgage Interest Rate (%)"
           placeholder="Enter the mortgage's interest rate"
-          onChange={this.delayAction('setInterestRate')}
+          onChange={this.handleChange.bind(null,'setInterestRate')}
         />
         <Input
           type="text"
+          value={this.props.rates.propertyTaxRate}
           label="Property Tax Rate (%)"
           placeholder="Enter the property tax rate"
-          onChange={this.delayAction('setPropertyTaxRate')}
+          onChange={this.handleChange.bind(null,'setPropertyTaxRate')}
         />
         <Input
           type="text"
+          value={this.props.rates.propertyInsuranceRate}
           label="Property Insurance Rate (%)"
           placeholder="Enter the property insurance rate"
-          onChange={this.delayAction('setPropertyInsuranceRate')}
+          onChange={this.handleChange.bind(null,'setPropertyInsuranceRate')}
         />
       </div>
     );
