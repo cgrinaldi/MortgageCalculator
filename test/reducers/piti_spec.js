@@ -2,7 +2,7 @@ import {expect} from 'chai';
 import reducer from '../../src/js/reducers/piti.js';
 import {PRODUCT_035, PRODUCT_10, PRODUCT_20, PRODUCT_REX} from '../MortgageConstants';
 import {SET_HOMEPRICE, SET_INCOME, SET_INTEREST_RATE,
-        SET_PROPERTY_TAX_RATE} from '../../src/js/constants/ActionTypes';
+        SET_PROPERTY_TAX_RATE, SET_PROPERTY_INSURANCE_RATE} from '../../src/js/constants/ActionTypes';
 
 describe('PITI reducer', () => {
 
@@ -67,6 +67,19 @@ describe('PITI reducer', () => {
         mortgageInterestRate: initialState.rates.mortgageInterestRate,
         propertyInsuranceRate: initialState.rates.propertyInsuranceRate,
         propertyTaxRate: 0.01
+      }
+    });
+  });
+
+  it('handles SET_PROPERTY_INSURANCE_RATE', () => {
+    const action = {type: SET_PROPERTY_INSURANCE_RATE, val: .006};
+    const nextState = reducer(initialState, action);
+    expect(nextState).to.deep.equal({
+      ...initialState,
+      rates: {
+        mortgageInterestRate: initialState.rates.mortgageInterestRate,
+        propertyInsuranceRate: 0.006,
+        propertyTaxRate: initialState.rates.propertyTaxRate
       }
     });
   });

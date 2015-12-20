@@ -15,3 +15,7 @@ export function setInterestRate (val) {
 export function setPropertyTaxRate (val) {
   return {type: types.SET_PROPERTY_TAX_RATE, val};
 }
+
+export function setPropertyInsuranceRate (val) {
+  return {type: types.SET_PROPERTY_INSURANCE_RATE, val};
+}

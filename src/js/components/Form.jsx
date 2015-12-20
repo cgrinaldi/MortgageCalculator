@@ -37,6 +37,11 @@ export default React.createClass({
           placeholder="Enter property tax rate"
           onChange={this.delayAction('setPropertyTaxRate')}
         />
+        <input
+          type="text"
+          placeholder="Enter property insurance rate"
+          onChange={this.delayAction('setPropertyInsuranceRate')}
+        />
       </form>
     );
   }
