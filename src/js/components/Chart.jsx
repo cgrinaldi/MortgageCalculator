@@ -6,7 +6,7 @@ import '../../styles/Chart.scss';
 // TODO: Implement Redux and form controls to update the chart
 
 const margin = {top: 65, right: 20, bottom: 30, left: 100},
-	fullWidth = 600,
+	fullWidth = 750,
 	fullHeight = 350,
 	width = fullWidth - margin.left - margin.right,
 	height = fullHeight - margin.top - margin.bottom;
@@ -89,12 +89,14 @@ export default React.createClass({
         .style("text-anchor","end")
         .text(yAxisLabel);
 
+
+		const barWidthPercent = 0.6
     svg.selectAll('.bar')
         .data(data)
       .enter().append('rect')
         .attr('class','bar')
-        .attr('x', d => x(d.x))
-        .attr('width', x.rangeBand())
+        .attr('x', d => x(d.x) + 0.5 * (1 - barWidthPercent) * x.rangeBand())
+        .attr('width', barWidthPercent * x.rangeBand())
         .attr('y', d => y(d.y))
         .attr('height', d => height - y(d.y));
 
@@ -131,8 +133,6 @@ export default React.createClass({
       .transition()
       .duration(ANIM_BAR_SPEED)
       .ease('back-out')
-        .attr('x', d => x(d.x))
-        .attr('width', x.rangeBand())
         .attr('y', d => y(d.y))
         .attr('height', d => height - y(d.y));
 
