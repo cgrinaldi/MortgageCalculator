@@ -13,14 +13,14 @@ const margin = {top: 65, right: 20, bottom: 30, left: 100},
 
 const ANIM_BAR_SPEED = 1500;
 const ANIM_AXIS_SPEED = 800;
-const currencyFormat = d3.format("$,");
 
 export default React.createClass({
 
   propTypes: {
     data: React.PropTypes.array.isRequired,
     title: React.PropTypes.string.isRequired,
-    yAxisLabel: React.PropTypes.string.isRequired
+		yAxisLabel: React.PropTypes.string.isRequired,
+		labelFormatter: React.PropTypes.func.isRequired
   },
 
   render () {
@@ -30,7 +30,8 @@ export default React.createClass({
   },
 
   initialize () {
-    var domain = this.calculateDomains(this.props.data);
+		const {data, labelFormatter} = this.props;
+    var domain = this.calculateDomains(data);
     this.x = d3.scale.ordinal()
         .rangeRoundBands([0, width], .1)
         .domain(domain.x);
@@ -46,7 +47,7 @@ export default React.createClass({
     this.yAxis = d3.svg.axis()
     			.scale(this.y)
     			.orient("left")
-          .tickFormat(currencyFormat);
+          .tickFormat(labelFormatter);
   },
 
   calculateDomains (data) {
@@ -68,7 +69,7 @@ export default React.createClass({
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    var {data, title, yAxisLabel} = this.props;
+    var {data, title, yAxisLabel, labelFormatter} = this.props;
 
     var svg = d3.select(this.refs.chart).select("g");
 
@@ -104,7 +105,7 @@ export default React.createClass({
         .data(data)
       .enter().append('text')
         .attr('class', 'text-label')
-        .text( d => currencyFormat(d.y))
+        .text( d => labelFormatter(d.y))
         .attr('x', d => x(d.x) + x.rangeBand()/2)
         .attr('y', d => y(d.y) - 5);
 
@@ -121,6 +122,7 @@ export default React.createClass({
 
 	shouldComponentUpdate({data}){
     const {x, y, xAxis, yAxis} = this;
+		const {labelFormatter} = this.props;
 		y.domain(this.calculateDomains(data).y);
 
 		var svg=d3.select(this.refs.chart)
@@ -143,7 +145,7 @@ export default React.createClass({
       .transition()
       .duration(ANIM_BAR_SPEED)
       .ease('back-out')
-        .text(d => currencyFormat(d.y))
+        .text(d => labelFormatter(d.y))
         .attr('x', d => x(d.x) + x.rangeBand()/2)
         .attr('y', d => y(d.y) - 5)
 

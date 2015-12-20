@@ -1,4 +1,5 @@
 import React from 'react';
+import d3 from 'd3';
 import {connect} from 'react-redux';
 import {calcDownpayment, calcMonthlyPITI, calcFrontendDTI} from '../calculations/piti';
 import * as actionCreators from '../actions/mortgageActions';
@@ -6,6 +7,9 @@ import '../../styles/CalcPITI.scss';
 
 import Chart from '../components/Chart';
 import Form from '../components/Form';
+
+const currencyFormat = d3.format('$,');
+const percentFormat = d3.format(',%');
 
 export const CalcPITI = React.createClass({
 
@@ -57,6 +61,7 @@ export const CalcPITI = React.createClass({
               data={this.calculateMonthlyPITI()}
               title={"Monthly PITI"}
               yAxisLabel={"Monthly PITI"}
+              labelFormatter={(val) => currencyFormat(Math.round(val))}
             />
           </div>
         </div>
@@ -66,6 +71,7 @@ export const CalcPITI = React.createClass({
               data={this.calculateDownpayments()}
               title={"Down Payment"}
               yAxisLabel={"Down Payment"}
+              labelFormatter={(val) => currencyFormat(Math.round(val))}
             />
           </div>
         </div>
@@ -75,6 +81,7 @@ export const CalcPITI = React.createClass({
               data={this.calculateFrontendDTI()}
               title={"Front End DTI"}
               yAxisLabel={"Front End DTI"}
+              labelFormatter={(val) => percentFormat(val)}
             />
           </div>
         </div>
