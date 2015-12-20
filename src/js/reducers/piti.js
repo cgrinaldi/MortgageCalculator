@@ -1,4 +1,5 @@
-import {SET_HOMEPRICE, SET_INCOME, SET_INTEREST_RATE} from '../constants/ActionTypes';
+import {SET_HOMEPRICE, SET_INCOME, SET_INTEREST_RATE,
+        SET_PROPERTY_TAX_RATE} from '../constants/ActionTypes';
 import {PRODUCT_035, PRODUCT_10, PRODUCT_20, PRODUCT_REX} from '../constants/MortgageConstants.js';
 
 const initialState = {
@@ -32,12 +33,22 @@ export default function piti (state = initialState, action) {
     }
 
   case SET_INTEREST_RATE:
-    const originalRates = state.rates;
+    var originalRates = state.rates;
     return {
       ...state,
       rates: {
         ...originalRates,
         mortgageInterestRate: action.val
+      }
+    };
+
+  case SET_PROPERTY_TAX_RATE:
+    var originalRates = state.rates;
+    return {
+      ...state,
+      rates: {
+        ...originalRates,
+        propertyTaxRate: action.val
       }
     };
 
