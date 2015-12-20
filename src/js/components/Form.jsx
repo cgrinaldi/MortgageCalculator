@@ -16,12 +16,18 @@ export default React.createClass({
 
   render () {
     return (
-      <div>
+      <form className="form-horizontal">
         <input
           type="text"
           placeholder="Enter homeprice"
-          onChange={this.delayAction('setHomePrice')} />
-      </div>
+          onChange={this.delayAction('setHomePrice')}
+        />
+      <input
+        type="text"
+        placeholder="Enter yearly household income"
+        onChange={this.delayAction('setIncome')}
+        />
+      </form>
     );
   }
 });

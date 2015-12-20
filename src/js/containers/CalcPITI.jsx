@@ -48,15 +48,15 @@ export const CalcPITI = React.createClass({
     return (
       <div>
         <div className="row">
+          <div className="col-md-4">
+            <Form {...this.props} />
+          </div>
           <div className="col-md-8">
             <Chart
               data={this.calculateMonthlyPITI()}
               title={"Monthly PITI"}
               yAxisLabel={"Monthly PITI"}
             />
-          </div>
-          <div className="col-md-4">
-            <Form {...this.props} />
           </div>
         </div>
         <div className="row">
