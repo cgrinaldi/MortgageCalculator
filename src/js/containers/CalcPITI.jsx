@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {calcDownpayment, calcMonthlyPITI, calcFrontendDTI} from '../calculations/piti';
 import * as actionCreators from '../actions/mortgageActions';
+import '../../styles/CalcPITI.scss';
 
 import Chart from '../components/Chart';
 import Form from '../components/Form';
@@ -48,10 +49,10 @@ export const CalcPITI = React.createClass({
     return (
       <div>
         <div className="row">
-          <div className="col-md-4">
+          <div id="user-input" className="col-md-3">
             <Form {...this.props} />
           </div>
-          <div className="col-md-8">
+          <div className="col-md-9 text-center">
             <Chart
               data={this.calculateMonthlyPITI()}
               title={"Monthly PITI"}

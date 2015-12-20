@@ -1,4 +1,5 @@
 import React from 'react';
+import {Input} from 'react-bootstrap';
 
 export default React.createClass({
   handleChange (action, e) {
@@ -16,33 +17,38 @@ export default React.createClass({
 
   render () {
     return (
-      <form className="form-horizontal">
-        <input
+      <div id="calc-inputs">
+        <Input
           type="text"
-          placeholder="Enter homeprice"
+          label="Home Price ($)"
+          placeholder="Enter the price of the home"
           onChange={this.delayAction('setHomePrice')}
         />
-        <input
+        <Input
           type="text"
-          placeholder="Enter yearly household income"
+          label="Yearly Household Income ($)"
+          placeholder="Enter your yearly household income"
           onChange={this.delayAction('setIncome')}
         />
-        <input
+        <Input
           type="text"
-          placeholder="Enter mortgage interest rate"
+          label="Mortgage Interest Rate (%)"
+          placeholder="Enter the mortgage's interest rate"
           onChange={this.delayAction('setInterestRate')}
         />
-        <input
+        <Input
           type="text"
-          placeholder="Enter property tax rate"
+          label="Property Tax Rate (%)"
+          placeholder="Enter the property tax rate"
           onChange={this.delayAction('setPropertyTaxRate')}
         />
-        <input
+        <Input
           type="text"
-          placeholder="Enter property insurance rate"
+          label="Property Insurance Rate (%)"
+          placeholder="Enter the property insurance rate"
           onChange={this.delayAction('setPropertyInsuranceRate')}
         />
-      </form>
+      </div>
     );
   }
 });
