@@ -7,3 +7,7 @@ export function setHomePrice (val) {
 export function setIncome (val) {
   return {type: types.SET_INCOME, val};
 };
+
+export function setInterestRate (val) {
+  return {type: types.SET_INTEREST_RATE, val};
+}

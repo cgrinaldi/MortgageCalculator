@@ -22,11 +22,16 @@ export default React.createClass({
           placeholder="Enter homeprice"
           onChange={this.delayAction('setHomePrice')}
         />
-      <input
-        type="text"
-        placeholder="Enter yearly household income"
-        onChange={this.delayAction('setIncome')}
+        <input
+          type="text"
+          placeholder="Enter yearly household income"
+          onChange={this.delayAction('setIncome')}
         />
+        <input
+            type="text"
+            placeholder="Enter mortgage interest rate"
+            onChange={this.delayAction('setInterestRate')}
+          />
       </form>
     );
   }

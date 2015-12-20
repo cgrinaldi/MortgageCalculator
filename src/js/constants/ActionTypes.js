@@ -1,2 +1,3 @@
 export const SET_HOMEPRICE = 'SET_HOMEPRICE';
 export const SET_INCOME = 'SET_INCOME';
+export const SET_INTEREST_RATE = 'SET_INTEREST_RATE';
