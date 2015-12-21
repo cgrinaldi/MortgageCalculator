@@ -1,9 +1,21 @@
-/*Styling Navigation */
-.navbar-default .navbar-nav>li>a:focus {
-  background-color: #eee;
+@import url(https://fonts.googleapis.com/css?family=Lato:400);
+
+body {
+  background-color: #fff;
 }
 
-.active {
-  border-bottom: 2px solid #bbb;
-  background-color: #eee;
+h3 {
+  color: #666;
+  font-family: Lato;
+  margin-top: 0px;
+  padding-bottom: 25px;
+  text-transform: uppercase;
+}
+
+
+hr {
+  left: 0;
+  top: 100px;
+  position: absolute;
+  width: 100%;
 }

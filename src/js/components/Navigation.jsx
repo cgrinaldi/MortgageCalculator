@@ -1,12 +1,13 @@
 import React from 'react';
 import {Link} from 'react-router';
+import '../../styles/Navigation.scss';
 
 export default React.createClass({
   render () {
     return (
-      <nav className="navbar navbar-default">
+      <nav className="navbar navbar-inverse">
         <div className="container">
-          <a className="navbar-brand" href="#">FirstREX</a>
+          <a className="navbar-brand" href="#"><img src="http://s18.postimg.org/ybyihby7t/First_Rex_logo2.png" /></a>
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav">
               <li><Link activeClassName="active" to="intro">Introduction</Link></li>

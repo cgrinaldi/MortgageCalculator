@@ -1,0 +1,23 @@
+nav.navbar.navbar-inverse {
+  a {
+    color: white;
+  }
+
+  a:hover {
+    color: #aaa;
+  }
+
+  ul.dropdown-menu {
+    background-color: #555;
+
+    & a:hover {
+      background-color: #555;
+      color: #aaa;
+    }
+  }
+
+  img {
+    width: 80px;
+  }
+
+}

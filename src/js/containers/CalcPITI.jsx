@@ -52,6 +52,8 @@ export const CalcPITI = React.createClass({
   render () {
     return (
       <div>
+        <h3>PITI and Cash Required</h3>
+        <hr />
         <div className="row">
           <div id="user-input" className="col-md-3">
             <Form {...this.props} />
@@ -59,7 +61,7 @@ export const CalcPITI = React.createClass({
           <div className="col-md-9 text-center">
             <Chart
               data={this.calculateMonthlyPITI()}
-              title={"Monthly PITI"}
+              title={""}
               yAxisLabel={"Monthly PITI"}
               labelFormatter={(val) => currencyFormat(Math.round(val))}
             />

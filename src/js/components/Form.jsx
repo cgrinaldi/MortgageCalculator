@@ -1,5 +1,6 @@
 import React from 'react';
 import {Input} from 'react-bootstrap';
+import '../../styles/Form.scss';
 
 export default React.createClass({
   handleChange (action, e) {

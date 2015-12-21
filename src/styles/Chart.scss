@@ -16,10 +16,10 @@ $secondary: #ffffff;
 }
 
 .bar {
-  fill: steelblue;
+  fill: rgb(26, 128, 182);
 
   &:hover {
-    fill: brown;
+    fill: rgba(#1a80b6, 0.7);
   }
 }
 
