@@ -151,6 +151,7 @@ export default React.createClass({
 				.attr('x', d => x(d.x) + x.rangeBand()/2)
 				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 65)
 				.style('text-anchor', 'middle')
+				.style('fill', d => d.frontendDTI >= .45 ? 'red' : 'black')
 				.text('Frontend DTI');
 
 		svg.selectAll('.bottom-data-point')
@@ -160,6 +161,7 @@ export default React.createClass({
 				.attr('x', d => x(d.x) + x.rangeBand()/2)
 				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 90)
 				.style('text-anchor', 'middle')
+				.style('fill', d => d.frontendDTI >= .45 ? 'red' : 'black')
 				.text(d => percentFormatter(d.frontendDTI));
 
     // Adding the title
@@ -232,7 +234,8 @@ export default React.createClass({
       .transition()
       .duration(ANIM_BAR_SPEED)
       .ease('back-out')
-        .attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 65);
+        .attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 65)
+				.style('fill', d => d.frontendDTI >= .45 ? 'red' : 'black');
 
 		var bottomDataPoints = svg.selectAll('.bottom-data-point')
 				.data(data);
@@ -242,7 +245,9 @@ export default React.createClass({
 			.duration(ANIM_BAR_SPEED)
 			.ease('back-out')
 				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 90)
+				.style('fill', d => d.frontendDTI >= .45 ? 'red' : 'black')
 				.text(d => percentFormatter(d.frontendDTI));
+
 
 		return false;
 	}
