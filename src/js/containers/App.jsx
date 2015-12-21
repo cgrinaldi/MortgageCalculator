@@ -2,6 +2,7 @@ import React from 'react';
 
 import Navigation from '../components/Navigation';
 import Intro from './Intro';
+import Footer from '../components/Footer';
 
 const App = React.createClass({
   render () {
@@ -11,6 +12,7 @@ const App = React.createClass({
         <div className="container">
           {this.content()}
         </div>
+        <Footer />
       </div>
     );
   },
