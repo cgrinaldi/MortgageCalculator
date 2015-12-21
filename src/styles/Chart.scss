@@ -6,6 +6,7 @@ $secondary: #ffffff;
 
 .chart {
   position: relative;
+  top: 30px;
 }
 
 .title {
@@ -46,9 +47,20 @@ $secondary: #ffffff;
   }
 }
 
-div.tool-tip {
-  background-color: green;
-  height: 30px;
-  width: 30px;
-  position: absolute;
+.tool-tip {
+  fill: #eee;
+}
+
+text {
+  &.data-label {
+    font-family: Lato;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+
+  &.data-point {
+    font-family: Lato;
+    font-size: 24px;
+    font-weight: 100;
+  }
 }

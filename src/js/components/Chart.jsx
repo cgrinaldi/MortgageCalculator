@@ -3,20 +3,20 @@ import d3 from 'd3';
 import _ from 'lodash';
 import '../../styles/Chart.scss';
 
-// TODO: Implement Redux and form controls to update the chart
-
-const margin = {top: 65, right: 20, bottom: 30, left: 100},
-	fullWidth = 750,
-	fullHeight = 350,
+const margin = {top: 85, right: 20, bottom: 30, left: 100},
+	fullWidth = 850,
+	fullHeight = 375,
 	width = fullWidth - margin.left - margin.right,
 	height = fullHeight - margin.top - margin.bottom;
 
 const ANIM_BAR_SPEED = 1500;
 const ANIM_AXIS_SPEED = 800;
 
-const toolTipHeight = 45;
+const toolTipHeight = 100;
 const toolTipGap = 10;
 const fontFamily = 'Lato';
+
+const percentFormatter = d3.format(',.0%')
 
 export default React.createClass({
 
@@ -29,7 +29,7 @@ export default React.createClass({
 
   render () {
     return (
-			<div ref="container">
+			<div className="chart" ref="container">
 				<svg ref="chart"></svg>
 			</div>
     );
@@ -37,6 +37,7 @@ export default React.createClass({
 
   initialize () {
 		const {data, labelFormatter} = this.props;
+		console.log('data in init is', data);
     var domain = this.calculateDomains(data);
     this.x = d3.scale.ordinal()
         .rangeRoundBands([0, width], .1)
@@ -44,7 +45,7 @@ export default React.createClass({
 
     this.y = d3.scale.linear()
     			.range([height, 0])
-          .domain(domain.y); // TOOD: Need to not hard code this
+          .domain(domain.y);
 
     this.xAxis = d3.svg.axis()
     			.scale(this.x)
@@ -101,7 +102,6 @@ export default React.createClass({
         .style("text-anchor","end")
         .text(yAxisLabel);
 
-
 		const barWidthPercent = 0.6
     svg.selectAll('.bar')
         .data(data)
@@ -112,15 +112,55 @@ export default React.createClass({
         .attr('y', d => y(d.y))
         .attr('height', d => height - y(d.y));
 
+
+		// Adding tool tips
+		// Box
 		svg.selectAll('.tool-tip')
 				.data(data)
-			.enter().append('rect')
+		.enter().append('rect')
 				.attr('class', 'tool-tip')
-				.attr('x', d => x(d.x) + (1- 0.8) * x.rangeBand() / 2)
-				.attr('y', d => y(d.y)- toolTipHeight - toolTipGap)
+				.attr('x', d => x(d.x) + (1 - 0.9) * x.rangeBand() / 2)
+				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap)
 				.style('height', toolTipHeight)
-				.style('width', 0.8 * x.rangeBand())
-				.style('fill', '#eee');
+				.style('width', 0.9 * x.rangeBand());
+
+		// Text #1
+		svg.selectAll('.top-data-label')
+				.data(data)
+			.enter().append('text')
+				.attr('class', 'top-data-label data-label')
+				.attr('x', d => x(d.x) + x.rangeBand()/2)
+				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 17)
+				.style('text-anchor', 'middle')
+				.text('Down Payment');
+
+		svg.selectAll('.top-data-point')
+				.data(data)
+			.enter().append('text')
+				.attr('class', 'top-data-point data-point')
+				.attr('x', d => x(d.x) + x.rangeBand()/2)
+				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 42)
+				.style('text-anchor', 'middle')
+				.text(d => labelFormatter(d.downPayment));
+
+		// Text #2
+		svg.selectAll('.bottom-data-label')
+				.data(data)
+			.enter().append('text')
+				.attr('class', 'bottom-data-label data-label')
+				.attr('x', d => x(d.x) + x.rangeBand()/2)
+				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 65)
+				.style('text-anchor', 'middle')
+				.text('Frontend DTI');
+
+		svg.selectAll('.bottom-data-point')
+				.data(data)
+			.enter().append('text')
+				.attr('class', 'bottom-data-point data-point')
+				.attr('x', d => x(d.x) + x.rangeBand()/2)
+				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 90)
+				.style('text-anchor', 'middle')
+				.text(d => percentFormatter(d.frontendDTI));
 
     // Adding the title
     svg.append('text')
@@ -132,7 +172,8 @@ export default React.createClass({
   },
 
 	shouldComponentUpdate({data}){
-    const {x, y, xAxis, yAxis} = this;
+		console.log('data in update is', data);
+		const {x, y, xAxis, yAxis} = this;
 		const {labelFormatter} = this.props;
 		y.domain(this.calculateDomains(data).y);
 
@@ -149,23 +190,6 @@ export default React.createClass({
         .attr('y', d => y(d.y))
         .attr('height', d => height - y(d.y));
 
-    var labels = svg.selectAll('.text-label')
-        .data(data);
-
-    labels
-      .transition()
-      .duration(ANIM_BAR_SPEED)
-      .ease('back-out')
-        .text(d => labelFormatter(d.y))
-        .attr('x', d => x(d.x) + x.rangeBand()/2)
-        .attr('y', d => y(d.y) - 5)
-
-    // This shouldn't be updating with the calculator
-		svg.select(".x.axis")
-      .transition()
-			.duration(ANIM_AXIS_SPEED)
-			.call(xAxis);
-
 		svg.select(".y.axis")
       .transition()
 			.duration(ANIM_AXIS_SPEED)
@@ -178,9 +202,47 @@ export default React.createClass({
 			.transition()
 			.duration(ANIM_BAR_SPEED)
 			.ease('back-out')
-				.attr('x', d => x(d.x) + (1- 0.8) * x.rangeBand() / 2)
-				.attr('y', d => y(d.y)- toolTipHeight - toolTipGap)
+				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap)
 				.style('opacity', d => d.y === 0 ? 0 : 1);
+
+
+    var topDataLabels = svg.selectAll('.top-data-label')
+        .data(data);
+
+    topDataLabels
+      .transition()
+      .duration(ANIM_BAR_SPEED)
+      .ease('back-out')
+        .attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 17);
+
+		var topDataPoints = svg.selectAll('.top-data-point')
+				.data(data);
+
+		topDataPoints
+			.transition()
+			.duration(ANIM_BAR_SPEED)
+			.ease('back-out')
+				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 42)
+				.text(d => labelFormatter(d.downPayment));
+
+		var bottomDataLabels = svg.selectAll('.bottom-data-label')
+        .data(data);
+
+    bottomDataLabels
+      .transition()
+      .duration(ANIM_BAR_SPEED)
+      .ease('back-out')
+        .attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 65);
+
+		var bottomDataPoints = svg.selectAll('.bottom-data-point')
+				.data(data);
+
+		bottomDataPoints
+			.transition()
+			.duration(ANIM_BAR_SPEED)
+			.ease('back-out')
+				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 90)
+				.text(d => percentFormatter(d.frontendDTI));
 
 		return false;
 	}

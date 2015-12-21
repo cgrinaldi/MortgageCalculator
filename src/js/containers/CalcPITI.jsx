@@ -15,40 +15,19 @@ const percentFormat = d3.format(',%');
 
 export const CalcPITI = React.createClass({
 
-  calculateMonthlyPITI () {
-    const {homePrice, rates, products} = this.props;
-    const calcMonthlyPITIBound = calcMonthlyPITI.bind(null, homePrice, rates);
-    var productsMonthlyPITI = products.map((product) => {
-      return {
-        x: product.name,
-        y: calcMonthlyPITIBound(product)
-      };
-    });
-    return productsMonthlyPITI;
-  },
-
-  calculateDownpayments () {
-    const {homePrice, products} = this.props;
-    const calcDownpaymentBound = calcDownpayment.bind(null, homePrice);
-    var downpayments = products.map((product) => {
-      return {
-        x: product.name,
-        y: calcDownpaymentBound(product)
-      };
-    });
-    return downpayments;
-  },
-
-  calculateFrontendDTI () {
+  calculateData () {
     const {homePrice, rates, householdIncome, products} = this.props;
+    const calcMonthlyPITIBound = calcMonthlyPITI.bind(null, homePrice, rates);
+    const calcDownpaymentBound = calcDownpayment.bind(null, homePrice);
     const calcFrontendDTIBound = calcFrontendDTI.bind(null, homePrice, rates, householdIncome);
-    var productsFrontendDTIs = products.map((product) => {
+    return products.map((product) => {
       return {
         x: product.name,
-        y: calcFrontendDTIBound(product)
+        y: calcMonthlyPITIBound(product),
+        frontendDTI: calcFrontendDTIBound(product),
+        downPayment: calcDownpaymentBound(product)
       };
     });
-    return productsFrontendDTIs;
   },
 
   render () {
@@ -73,7 +52,7 @@ export const CalcPITI = React.createClass({
               </ButtonGroup>
             </ButtonToolbar>
             <Chart
-              data={this.calculateMonthlyPITI()}
+              data={this.calculateData()}
               title={""}
               yAxisLabel={"Monthly PITI"}
               labelFormatter={(val) => currencyFormat(Math.round(val))}
