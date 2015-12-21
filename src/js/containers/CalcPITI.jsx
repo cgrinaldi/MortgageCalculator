@@ -5,6 +5,8 @@ import {calcDownpayment, calcMonthlyPITI, calcFrontendDTI} from '../calculations
 import * as actionCreators from '../actions/mortgageActions';
 import '../../styles/CalcPITI.scss';
 
+import {ButtonToolbar, ButtonGroup, Button} from 'react-bootstrap';
+
 import Chart from '../components/Chart';
 import Form from '../components/Form';
 
@@ -50,6 +52,11 @@ export const CalcPITI = React.createClass({
   },
 
   render () {
+    const buttonStyle = {
+      borderRadius: '0px',
+      fontFamily: 'Lato',
+      textTransform: 'uppercase'
+    };
     return (
       <div>
         <h3>PITI and Cash Required</h3>
@@ -59,31 +66,17 @@ export const CalcPITI = React.createClass({
             <Form {...this.props} />
           </div>
           <div className="col-md-9 text-center">
+            <ButtonToolbar style={{paddingLeft: '40%'}}>
+              <ButtonGroup bsSize="large">
+                <Button style={buttonStyle}>Madlib</Button>
+                <Button style={buttonStyle}>Chart</Button>
+              </ButtonGroup>
+            </ButtonToolbar>
             <Chart
               data={this.calculateMonthlyPITI()}
               title={""}
               yAxisLabel={"Monthly PITI"}
               labelFormatter={(val) => currencyFormat(Math.round(val))}
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-8">
-            <Chart
-              data={this.calculateDownpayments()}
-              title={"Down Payment"}
-              yAxisLabel={"Down Payment"}
-              labelFormatter={(val) => currencyFormat(Math.round(val))}
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-8">
-            <Chart
-              data={this.calculateFrontendDTI()}
-              title={"Front End DTI"}
-              yAxisLabel={"Front End DTI"}
-              labelFormatter={(val) => percentFormat(val)}
             />
           </div>
         </div>
