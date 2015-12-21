@@ -9,11 +9,24 @@ import {ButtonToolbar, ButtonGroup, Button} from 'react-bootstrap';
 
 import Chart from '../components/Chart';
 import Form from '../components/Form';
+import Summary from '../components/Summary';
 
 const currencyFormat = d3.format('$,');
 const percentFormat = d3.format(',%');
 
 export const CalcPITI = React.createClass({
+
+  getInitialState () {
+    return {
+      showing: 'summary'
+    }
+  },
+
+  swapShowing (state) {
+    this.setState({
+      showing: state
+    });
+  },
 
   calculateData () {
     const {homePrice, rates, householdIncome, products} = this.props;
@@ -28,6 +41,21 @@ export const CalcPITI = React.createClass({
         downPayment: calcDownpaymentBound(product)
       };
     });
+  },
+
+  renderView () {
+    if (this.state.showing === 'summary') {
+      return <Summary data={this.calculateData()} />
+    } else {
+      return (
+        <Chart
+          data={this.calculateData()}
+          title={""}
+          yAxisLabel={"Monthly PITI"}
+          labelFormatter={(val) => currencyFormat(Math.round(val))}
+        />
+      );
+    }
   },
 
   render () {
@@ -45,18 +73,23 @@ export const CalcPITI = React.createClass({
             <Form {...this.props} />
           </div>
           <div className="col-md-9 text-center">
-            <ButtonToolbar style={{paddingLeft: '40%'}}>
+            <ButtonToolbar style={{paddingLeft: '35%'}}>
               <ButtonGroup bsSize="large">
-                <Button style={buttonStyle}>Madlib</Button>
-                <Button style={buttonStyle}>Chart</Button>
+                <Button
+                  active={this.state.showing === 'summary' ? true : false}
+                  style={buttonStyle}
+                  onClick={() => this.swapShowing('summary')}>
+                    Summary
+                </Button>
+                <Button
+                  active={this.state.showing === 'visualization' ? true : false}
+                  style={buttonStyle}
+                  onClick={() => this.swapShowing('visualization')}>
+                    Visualization
+                </Button>
               </ButtonGroup>
             </ButtonToolbar>
-            <Chart
-              data={this.calculateData()}
-              title={""}
-              yAxisLabel={"Monthly PITI"}
-              labelFormatter={(val) => currencyFormat(Math.round(val))}
-            />
+            {this.renderView()}
           </div>
         </div>
       </div>
