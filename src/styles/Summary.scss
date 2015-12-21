@@ -1,0 +1,29 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:400);
+
+div.summary {
+  padding-top: 15px;
+}
+
+p {
+  font-size: 28px;
+  font-family: Lato;
+  line-height: 40px;
+  padding-left: 20px;
+  padding-bottom: 10px;
+  text-align: left;
+}
+
+.underline {
+  border-bottom: 2px dotted #000;
+}
+
+.warnings {
+  background-color: #ccc;
+  margin: 0 auto;
+  width: 80%;
+
+  p {
+    text-align: center;
+    padding-bottom: 0px;
+  }
+}

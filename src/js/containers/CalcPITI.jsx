@@ -45,7 +45,7 @@ export const CalcPITI = React.createClass({
 
   renderView () {
     if (this.state.showing === 'summary') {
-      return <Summary />
+      return <Summary data={this.calculateData()} />
     } else {
       return (
         <Chart
@@ -73,7 +73,7 @@ export const CalcPITI = React.createClass({
             <Form {...this.props} />
           </div>
           <div className="col-md-9 text-center">
-            <ButtonToolbar style={{paddingLeft: '40%'}}>
+            <ButtonToolbar style={{paddingLeft: '35%'}}>
               <ButtonGroup bsSize="large">
                 <Button
                   active={this.state.showing === 'summary' ? true : false}
