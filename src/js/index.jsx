@@ -11,6 +11,8 @@ import ApprovalTool from './containers/ApprovalTool';
 import CalcPITI from './containers/CalcPITI';
 import CalcMaxPurchase from './containers/CalcMaxPurchase';
 
+import '../styles/App.scss';
+
 const store = configureStore();
 
 ReactDOM.render(

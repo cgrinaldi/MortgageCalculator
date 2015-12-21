@@ -3,7 +3,10 @@ import React from 'react';
 export default React.createClass({
   render () {
     return (
-      <h1>Approval Tool</h1>
+      <div>
+        <h3>Approval Tool</h3>
+        <hr />
+      </div>
     );
   }
 });

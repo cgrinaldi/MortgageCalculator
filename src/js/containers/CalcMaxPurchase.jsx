@@ -3,7 +3,10 @@ import React from 'react';
 export default React.createClass({
   render () {
     return (
-      <h1>Max Purchase Calculator</h1>
+      <div>
+        <h3>Max Purchase Calculator</h3>
+        <hr />
+      </div>
     );
   }
 });
