@@ -14,6 +14,10 @@ const margin = {top: 65, right: 20, bottom: 30, left: 100},
 const ANIM_BAR_SPEED = 1500;
 const ANIM_AXIS_SPEED = 800;
 
+const toolTipHeight = 45;
+const toolTipGap = 10;
+const fontFamily = 'Lato';
+
 export default React.createClass({
 
   propTypes: {
@@ -25,7 +29,9 @@ export default React.createClass({
 
   render () {
     return (
-      <svg ref="chart"></svg>
+			<div ref="container">
+				<svg ref="chart"></svg>
+			</div>
     );
   },
 
@@ -47,6 +53,7 @@ export default React.createClass({
     this.yAxis = d3.svg.axis()
     			.scale(this.y)
     			.orient("left")
+					.ticks(8)
           .tickFormat(labelFormatter);
   },
 
@@ -74,19 +81,23 @@ export default React.createClass({
     var svg = d3.select(this.refs.chart).select("g");
 
     // The 'g' element we are adding is for the xAxis
-    svg.append("g")
+    var a = svg.append("g")
         .attr("class", "x axis")
         .attr("transform", `translate(0,${height+5})`)
         .call(xAxis);
 
+		a.selectAll('text')
+			.attr('dy', 15);
+
     svg.append("g")
         .attr("class", "y axis")
-        .call(this.yAxis)
+        .call(yAxis)
       .append("text")
+				.attr("class", "axisLabel")
         .attr("transform", "rotate(-90)")
         .attr("y", -75)
         .attr("x", -90)
-        .attr("dy", ".71em")
+        .attr("dy", ".9em")
         .style("text-anchor","end")
         .text(yAxisLabel);
 
@@ -101,22 +112,22 @@ export default React.createClass({
         .attr('y', d => y(d.y))
         .attr('height', d => height - y(d.y));
 
-    svg.selectAll('.text-label')
-        .data(data)
-      .enter().append('text')
-        .attr('class', 'text-label')
-        .text( d => labelFormatter(d.y))
-        .attr('x', d => x(d.x) + x.rangeBand()/2)
-        .attr('y', d => y(d.y) - 5);
+		svg.selectAll('.tool-tip')
+				.data(data)
+			.enter().append('rect')
+				.attr('class', 'tool-tip')
+				.attr('x', d => x(d.x) + (1- 0.8) * x.rangeBand() / 2)
+				.attr('y', d => y(d.y)- toolTipHeight - toolTipGap)
+				.style('height', toolTipHeight)
+				.style('width', 0.8 * x.rangeBand())
+				.style('fill', '#eee');
 
     // Adding the title
     svg.append('text')
+				.attr('class', 'title')
         .attr('x', width / 2)
         .attr('y', 0 - margin.top / 2)
         .attr('text-anchor', 'middle')
-        .style('font-size', '22px')
-        .style('font-weight', 'bold')
-        .style('fill', '#333')
         .text(title);
   },
 
@@ -159,6 +170,17 @@ export default React.createClass({
       .transition()
 			.duration(ANIM_AXIS_SPEED)
 			.call(yAxis);
+
+		var tooltips = svg.selectAll('.tool-tip')
+			.data(data);
+
+		tooltips
+			.transition()
+			.duration(ANIM_BAR_SPEED)
+			.ease('back-out')
+				.attr('x', d => x(d.x) + (1- 0.8) * x.rangeBand() / 2)
+				.attr('y', d => y(d.y)- toolTipHeight - toolTipGap)
+				.style('opacity', d => d.y === 0 ? 0 : 1);
 
 		return false;
 	}
