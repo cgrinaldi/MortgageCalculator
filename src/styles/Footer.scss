@@ -1,9 +1,12 @@
 .footer {
-  position: absolute;
+  right: 0;
   bottom: 0;
+  left: 0;
   width: 100%;
   height: 50px;
-  background-color: black;
+  background-color: #555;
+  position: absolute;
+  margin-top: 30px;
 
   li {
     display: inline;
@@ -13,8 +16,10 @@
     color: white;
     font-size: 16px;
     margin-bottom: 0px;
+    margin-left: 0px;
     padding-top: 5px;
     padding-bottom: 0px;
+    text-align: left;
   }
 
   .fa {

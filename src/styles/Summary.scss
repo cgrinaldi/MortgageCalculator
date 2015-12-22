@@ -1,29 +1,43 @@
-@import url(https://fonts.googleapis.com/css?family=Lato:400);
+@import url(https://fonts.googleapis.com/css?family=Lato:300italic,300,400);
 
 div.summary {
   padding-top: 15px;
 }
 
 p {
-  font-size: 28px;
+  font-size: 24px;
   font-family: Lato;
+  font-weight: 300;
   line-height: 40px;
-  padding-left: 20px;
+  width: 65%;
+  padding-top: 10px;
   padding-bottom: 10px;
-  text-align: left;
+  text-align: center;
+  margin: 0 auto;
+}
+
+p.explanation {
+  font-style: italic;
+  font-size: 18px;
+  padding: 0px 0;
 }
 
 .underline {
-  border-bottom: 2px dotted #000;
+  border-bottom: 1px solid #888;
+  font-weight: bolder;
 }
 
 .warnings {
-  background-color: #ccc;
-  margin: 0 auto;
-  width: 80%;
+  border: 1px solid red;
+  margin: 15px auto;
+  margin-bottom: 100px;
+  padding: 15px;
+  width: 500px;
 
   p {
     text-align: center;
-    padding-bottom: 0px;
+    line-height: 10px;
+    font-size: 20px;
+    width: 100%
   }
 }

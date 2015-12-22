@@ -6,7 +6,7 @@ export default React.createClass({
   render () {
     return (
       <footer className="footer">
-        <div className="col-md-8 pull-left text-left">
+        <div className="col-md-4 pull-left text-left">
           <p>
             Prototype developed by Chris Rinaldi
           </p>
