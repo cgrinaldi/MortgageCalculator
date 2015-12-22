@@ -24,20 +24,6 @@ export default React.createClass({
     return result;
   },
 
-  renderFrontendDTIWarning () {
-    const productsHighDTI = this.props.data.filter(product => {
-      return product.frontendDTI >= .45;
-    });
-    const warnings = productsHighDTI.map(product => {
-      return <p>
-        {product.x} has a Frontend DTI > 45%.
-      </p>
-    });
-    if (warnings.length > 0) {
-      return <div className="warnings">{warnings}</div>;
-    }
-  },
-
   render () {
     // TODO: Decrease space between two paragraphs
     const productREX = this.getProduct(Constants.PRODUCT_REX.name);
@@ -55,7 +41,6 @@ export default React.createClass({
           If you instead choose to use the 3.5% Downpayment, your monthly payment would be <span className="underline">{currencyFormatter(product035.y)}</span>,
           or <span className="underline">{' ' + currencyFormatter(this.amountDiff(product035.y, productREX.y))}</span> more per month than with REX Homebuyer.
         </p>
-        {this.renderFrontendDTIWarning()}
       </div>
     );
   }

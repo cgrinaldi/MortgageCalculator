@@ -73,19 +73,19 @@ export const CalcPITI = React.createClass({
             <Form {...this.props} />
           </div>
           <div className="col-md-9 text-center">
-            <ButtonToolbar style={{paddingLeft: '35%', marginTop: '15px'}}>
+            <ButtonToolbar id="toggle-buttons">
               <ButtonGroup bsSize="large">
                 <Button
-                  active={this.state.showing === 'summary' ? true : false}
+                  className={this.state.showing === 'summary' ? 'selected' : ''}
                   style={buttonStyle}
                   onClick={() => this.swapShowing('summary')}>
                     Summary
                 </Button>
                 <Button
-                  active={this.state.showing === 'visualization' ? true : false}
+                  className={this.state.showing === 'visualization' ? 'selected' : ''}
                   style={buttonStyle}
                   onClick={() => this.swapShowing('visualization')}>
-                    Visualization
+                    Chart
                 </Button>
               </ButtonGroup>
             </ButtonToolbar>

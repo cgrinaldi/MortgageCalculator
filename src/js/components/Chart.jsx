@@ -3,7 +3,7 @@ import d3 from 'd3';
 import _ from 'lodash';
 import '../../styles/Chart.scss';
 
-const margin = {top: 85, right: 20, bottom: 30, left: 100},
+const margin = {top: 90, right: 20, bottom: 30, left: 100},
 	fullWidth = 850,
 	fullHeight = 375,
 	width = fullWidth - margin.left - margin.right,
@@ -12,7 +12,7 @@ const margin = {top: 85, right: 20, bottom: 30, left: 100},
 const ANIM_BAR_SPEED = 1500;
 const ANIM_AXIS_SPEED = 800;
 
-const toolTipHeight = 100;
+const toolTipHeight = 105;
 const toolTipGap = 10;
 const fontFamily = 'Lato';
 
@@ -130,7 +130,7 @@ export default React.createClass({
 			.enter().append('text')
 				.attr('class', 'top-data-label data-label')
 				.attr('x', d => x(d.x) + x.rangeBand()/2)
-				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 17)
+				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 19)
 				.style('text-anchor', 'middle')
 				.text('Down Payment');
 
@@ -139,7 +139,7 @@ export default React.createClass({
 			.enter().append('text')
 				.attr('class', 'top-data-point data-point')
 				.attr('x', d => x(d.x) + x.rangeBand()/2)
-				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 42)
+				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 44)
 				.style('text-anchor', 'middle')
 				.text(d => labelFormatter(d.downPayment));
 
@@ -149,7 +149,7 @@ export default React.createClass({
 			.enter().append('text')
 				.attr('class', 'bottom-data-label data-label')
 				.attr('x', d => x(d.x) + x.rangeBand()/2)
-				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 65)
+				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 71)
 				.style('text-anchor', 'middle')
 				.style('fill', d => d.frontendDTI >= .45 ? 'red' : 'black')
 				.text('Frontend DTI');
@@ -159,7 +159,7 @@ export default React.createClass({
 			.enter().append('text')
 				.attr('class', 'bottom-data-point data-point')
 				.attr('x', d => x(d.x) + x.rangeBand()/2)
-				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 90)
+				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 96)
 				.style('text-anchor', 'middle')
 				.style('fill', d => d.frontendDTI >= .45 ? 'red' : 'black')
 				.text(d => percentFormatter(d.frontendDTI));
@@ -215,7 +215,7 @@ export default React.createClass({
       .transition()
       .duration(ANIM_BAR_SPEED)
       .ease('back-out')
-        .attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 17);
+        .attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 19);
 
 		var topDataPoints = svg.selectAll('.top-data-point')
 				.data(data);
@@ -224,7 +224,7 @@ export default React.createClass({
 			.transition()
 			.duration(ANIM_BAR_SPEED)
 			.ease('back-out')
-				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 42)
+				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 44)
 				.text(d => labelFormatter(d.downPayment));
 
 		var bottomDataLabels = svg.selectAll('.bottom-data-label')
@@ -234,7 +234,7 @@ export default React.createClass({
       .transition()
       .duration(ANIM_BAR_SPEED)
       .ease('back-out')
-        .attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 65)
+        .attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 71)
 				.style('fill', d => d.frontendDTI >= .45 ? 'red' : 'black');
 
 		var bottomDataPoints = svg.selectAll('.bottom-data-point')
@@ -244,7 +244,7 @@ export default React.createClass({
 			.transition()
 			.duration(ANIM_BAR_SPEED)
 			.ease('back-out')
-				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 90)
+				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 96)
 				.style('fill', d => d.frontendDTI >= .45 ? 'red' : 'black')
 				.text(d => percentFormatter(d.frontendDTI));
 

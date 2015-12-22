@@ -2,7 +2,6 @@
 
 #user-input {
   background-color: #eee;
-  border-radius: 5px;
   color: #666;
   font-family: Lato;
   margin-top: 17px;
@@ -20,4 +19,8 @@
 
 #calc-inputs .form-group:last-child {
   margin-bottom: 15px;
+}
+
+#calc-inputs input[type="text"] {
+  border-radius: 0;
 }
