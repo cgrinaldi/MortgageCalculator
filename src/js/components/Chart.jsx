@@ -164,6 +164,14 @@ export default React.createClass({
 				.style('fill', d => d.frontendDTI >= .45 ? 'red' : 'black')
 				.text(d => percentFormatter(d.frontendDTI));
 
+		// Adding Triangle pointers
+		svg.selectAll(".triangle")
+				.data(data)
+			.enter().append("path")
+				.attr("class", "triangle")
+				.attr("d", d3.svg.symbol().type("triangle-down"))
+				.attr("transform", function(d) { return "translate(" + (x(d.x) + x.rangeBand()/2) + "," + (y(d.y) - 6) + ")"; });
+
     // Adding the title
     svg.append('text')
 				.attr('class', 'title')
@@ -248,6 +256,14 @@ export default React.createClass({
 				.style('fill', d => d.frontendDTI >= .45 ? 'red' : 'black')
 				.text(d => percentFormatter(d.frontendDTI));
 
+		var triangles = svg.selectAll('.triangle')
+				.data(data);
+
+		triangles
+			.transition()
+			.duration(ANIM_BAR_SPEED)
+			.ease('back-out')
+				.attr("transform", function(d) { return "translate(" + (x(d.x) + x.rangeBand()/2) + "," + (y(d.y) - 6) + ")"; });
 
 		return false;
 	}
