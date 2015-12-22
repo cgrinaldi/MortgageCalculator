@@ -73,7 +73,7 @@ export const CalcPITI = React.createClass({
             <Form {...this.props} />
           </div>
           <div className="col-md-9 text-center">
-            <ButtonToolbar style={{paddingLeft: '35%'}}>
+            <ButtonToolbar style={{paddingLeft: '35%', marginTop: '15px'}}>
               <ButtonGroup bsSize="large">
                 <Button
                   active={this.state.showing === 'summary' ? true : false}

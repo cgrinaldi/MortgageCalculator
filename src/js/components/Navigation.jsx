@@ -6,7 +6,7 @@ export default React.createClass({
   render () {
     return (
       <nav className="navbar navbar-inverse">
-        <div className="container">
+        <div className="container-fluid">
           <a className="navbar-brand" href="#"><img src="http://s18.postimg.org/ybyihby7t/First_Rex_logo2.png" /></a>
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav">
@@ -24,7 +24,7 @@ export default React.createClass({
               <li><Link activeClassName="active" to="approval">Approval Tool</Link></li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
-              <li><a>User Settings</a></li>
+              <li><a id="user-icon"><i className="fa fa-user"></i></a></li>
             </ul>
           </div>
         </div>

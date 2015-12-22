@@ -1,5 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:400);
 
+html, body {
+  min-height: 100%;
+  position: relative;
+}
+
 body {
   background-color: #fff;
 }

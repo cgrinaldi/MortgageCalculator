@@ -5,6 +5,19 @@
   border-radius: 5px;
   color: #666;
   font-family: Lato;
+  margin-top: 17px;
   padding-top: 15px;
   padding-bottom: 5px;
+}
+
+#calc-inputs .form-group {
+  margin-top: 27px;
+}
+
+#calc-inputs .form-group:first-child {
+  margin-top: 5px;
+}
+
+#calc-inputs .form-group:last-child {
+  margin-bottom: 15px;
 }

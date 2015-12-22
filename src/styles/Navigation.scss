@@ -1,4 +1,6 @@
 nav.navbar.navbar-inverse {
+  padding-left: 20px;
+
   a {
     color: white;
   }
@@ -19,5 +21,12 @@ nav.navbar.navbar-inverse {
   img {
     width: 80px;
   }
+}
 
+#user-icon {
+  background-color: #4C4C4D;
+
+  i {
+    font-size: 22px;
+  }
 }
