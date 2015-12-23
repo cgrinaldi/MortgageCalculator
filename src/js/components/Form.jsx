@@ -99,7 +99,7 @@ export default React.createClass({
 
     // We do not want to parse or send this to Redux, user still typing
     if (cleanedInput.endsWith('.') ||
-       (cleanedInput.endsWith('0') && (cleanedInput.indexOf('.') !== -1 && cleanedInput.indexOf('0') < cleanedInput.indexOf('.')))) {
+       (cleanedInput.endsWith('0') && (cleanedInput.indexOf('.') !== -1 && cleanedInput.lastIndexOf('0') > cleanedInput.indexOf('.')))) {
       this.setState({
         [property]: cleanedInput
       });
@@ -113,7 +113,7 @@ export default React.createClass({
         [property]: cleanedInput
       });
     } else if (floatCleanedInput) {
-      this.props[action](cleanedInput / 100);
+      this.props[action](floatCleanedInput / 100);
     } else {
       this.setState({
         [property]: cleanedInput
@@ -122,7 +122,6 @@ export default React.createClass({
   },
 
   render () {
-    console.log('state is', this.state);
     return (
       <div id="calc-inputs">
         <Input

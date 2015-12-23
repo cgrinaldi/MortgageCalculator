@@ -45,7 +45,8 @@
 }
 
 .tool-tip {
-  fill: #eee;
+  stroke: #999;
+  fill: white;
 }
 
 text {
@@ -63,6 +64,13 @@ text {
 }
 
 .triangle {
-  stroke: #eee;
-  fill: #eee;
+  stroke: #f3f3f3;
+  fill: #f3f3f3;
+}
+
+.bar-label {
+  fill: white;
+  font-family: Lato;
+  font-weight: 100;
+  font-size: 24px;
 }
