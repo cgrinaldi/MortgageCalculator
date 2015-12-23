@@ -3,7 +3,7 @@ import d3 from 'd3';
 import _ from 'lodash';
 import '../../styles/Chart.scss';
 
-const margin = {top: 90, right: 20, bottom: 30, left: 100},
+const margin = {top: 100, right: 20, bottom: 30, left: 100},
 	fullWidth = 850,
 	fullHeight = 375,
 	width = fullWidth - margin.left - margin.right,
@@ -37,7 +37,6 @@ export default React.createClass({
 
   initialize () {
 		const {data, labelFormatter} = this.props;
-		console.log('data in init is', data);
     var domain = this.calculateDomains(data);
     this.x = d3.scale.ordinal()
         .rangeRoundBands([0, width], .1)
@@ -96,7 +95,7 @@ export default React.createClass({
       .append("text")
 				.attr("class", "axisLabel")
         .attr("transform", "rotate(-90)")
-        .attr("y", -75)
+        .attr("y", -90)
         .attr("x", -90)
         .attr("dy", ".9em")
         .style("text-anchor","end")
@@ -130,7 +129,7 @@ export default React.createClass({
 			.enter().append('text')
 				.attr('class', 'top-data-label data-label')
 				.attr('x', d => x(d.x) + x.rangeBand()/2)
-				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 19)
+				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 21)
 				.style('text-anchor', 'middle')
 				.text('Down Payment');
 
@@ -149,7 +148,7 @@ export default React.createClass({
 			.enter().append('text')
 				.attr('class', 'bottom-data-label data-label')
 				.attr('x', d => x(d.x) + x.rangeBand()/2)
-				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 71)
+				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 67)
 				.style('text-anchor', 'middle')
 				.style('fill', d => d.frontendDTI >= .45 ? 'red' : 'black')
 				.text('Frontend DTI');
@@ -159,10 +158,28 @@ export default React.createClass({
 			.enter().append('text')
 				.attr('class', 'bottom-data-point data-point')
 				.attr('x', d => x(d.x) + x.rangeBand()/2)
-				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 96)
+				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 92)
 				.style('text-anchor', 'middle')
 				.style('fill', d => d.frontendDTI >= .45 ? 'red' : 'black')
 				.text(d => percentFormatter(d.frontendDTI));
+
+		// PITI label
+		svg.selectAll('.bar-label')
+				.data(data)
+			.enter().append('text')
+				.attr('class', 'bar-label')
+				.attr('x', d => x(d.x) + x.rangeBand()/2)
+				.attr('y', d => y(d.y) + 20)
+				.style('text-anchor', 'middle')
+				.text(d => labelFormatter(d.y));
+
+		// Adding Triangle pointers
+		// svg.selectAll(".triangle")
+		// 		.data(data)
+		// 	.enter().append("path")
+		// 		.attr("class", "triangle")
+		// 		.attr("d", d3.svg.symbol().type("triangle-down"))
+		// 		.attr("transform", function(d) { return "translate(" + (x(d.x) + x.rangeBand()/2) + "," + (y(d.y) - 5) + ")"; });
 
     // Adding the title
     svg.append('text')
@@ -174,7 +191,6 @@ export default React.createClass({
   },
 
 	shouldComponentUpdate({data}){
-		console.log('data in update is', data);
 		const {x, y, xAxis, yAxis} = this;
 		const {labelFormatter} = this.props;
 		y.domain(this.calculateDomains(data).y);
@@ -215,7 +231,7 @@ export default React.createClass({
       .transition()
       .duration(ANIM_BAR_SPEED)
       .ease('back-out')
-        .attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 19);
+        .attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 21);
 
 		var topDataPoints = svg.selectAll('.top-data-point')
 				.data(data);
@@ -234,7 +250,7 @@ export default React.createClass({
       .transition()
       .duration(ANIM_BAR_SPEED)
       .ease('back-out')
-        .attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 71)
+        .attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 67)
 				.style('fill', d => d.frontendDTI >= .45 ? 'red' : 'black');
 
 		var bottomDataPoints = svg.selectAll('.bottom-data-point')
@@ -244,10 +260,29 @@ export default React.createClass({
 			.transition()
 			.duration(ANIM_BAR_SPEED)
 			.ease('back-out')
-				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 96)
+				.attr('y', d => y(d.y) - toolTipHeight - toolTipGap + 92)
 				.style('fill', d => d.frontendDTI >= .45 ? 'red' : 'black')
 				.text(d => percentFormatter(d.frontendDTI));
 
+		// PITI label
+		var pitiLabels = svg.selectAll('.bar-label')
+				.data(data);
+
+		pitiLabels
+			.transition()
+			.duration(ANIM_BAR_SPEED)
+			.ease('back-out')
+				.attr('y', d => y(d.y) + 20)
+				.text(d => labelFormatter(d.y));
+
+		// var triangles = svg.selectAll('.triangle')
+		// 		.data(data);
+		//
+		// triangles
+		// 	.transition()
+		// 	.duration(ANIM_BAR_SPEED)
+		// 	.ease('back-out')
+		// 		.attr("transform", function(d) { return "translate(" + (x(d.x) + x.rangeBand()/2) + "," + (y(d.y) - 5) + ")"; });
 
 		return false;
 	}

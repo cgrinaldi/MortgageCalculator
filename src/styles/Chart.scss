@@ -3,6 +3,7 @@
 .chart {
   position: relative;
   top: 30px;
+  margin-bottom: 120px;
 }
 
 .title {
@@ -44,7 +45,8 @@
 }
 
 .tool-tip {
-  fill: #eee;
+  stroke: #999;
+  fill: white;
 }
 
 text {
@@ -59,4 +61,16 @@ text {
     font-size: 24px;
     font-weight: 100;
   }
+}
+
+.triangle {
+  stroke: #f3f3f3;
+  fill: #f3f3f3;
+}
+
+.bar-label {
+  fill: white;
+  font-family: Lato;
+  font-weight: 100;
+  font-size: 24px;
 }
