@@ -8,7 +8,7 @@ export default React.createClass({
       <footer className="footer">
         <div className="col-md-12 text-center">
           <ul>
-            <li>Prototype by Chris Rinaldi</li>
+            <li><a href="https://github.com/cgrinaldi/MortgageDashboard">Prototype by Chris Rinaldi</a></li>
             <li><a href="https://www.linkedin.com/in/cgrinaldi"><i className="fa fa-linkedin-square"></i></a></li>
             <li><a href="https://github.com/cgrinaldi"><i className="fa fa-github"></i></a></li>
             <li><a href="https://twitter.com/cgrinaldi"><i className="fa fa-twitter"></i></a></li>
