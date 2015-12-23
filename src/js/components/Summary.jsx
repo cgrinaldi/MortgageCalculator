@@ -31,7 +31,7 @@ export default React.createClass({
     const product035 = this.getProduct(Constants.PRODUCT_035.name);
     return (
       <div className="summary">
-        <p className="explanation">Change the values in the form on your left. INSTRUCTIONS.</p>
+        <p className="explanation">Change the values in the form on the left and see how FirstREX Homebuyer can help you purchase a home.</p>
         <p>
           With the REX Homebuyer, your downpayment would be <span className="underline">{ currencyFormatter(productREX.downPayment)}</span> with
           a monthly payment of <span className="underline">{currencyFormatter(productREX.y)}</span>. If you were to instead place a 20% downpayment,

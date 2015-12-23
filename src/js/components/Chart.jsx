@@ -5,7 +5,7 @@ import '../../styles/Chart.scss';
 
 const margin = {top: 100, right: 20, bottom: 30, left: 100},
 	fullWidth = 850,
-	fullHeight = 375,
+	fullHeight = 350,
 	width = fullWidth - margin.left - margin.right,
 	height = fullHeight - margin.top - margin.bottom;
 
