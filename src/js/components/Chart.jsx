@@ -169,7 +169,7 @@ export default React.createClass({
 			.enter().append('text')
 				.attr('class', 'bar-label')
 				.attr('x', d => x(d.x) + x.rangeBand()/2)
-				.attr('y', d => y(d.y) + 20)
+				.attr('y', d => y(d.y) + 26)
 				.style('text-anchor', 'middle')
 				.text(d => labelFormatter(d.y));
 
@@ -272,7 +272,7 @@ export default React.createClass({
 			.transition()
 			.duration(ANIM_BAR_SPEED)
 			.ease('back-out')
-				.attr('y', d => y(d.y) + 20)
+				.attr('y', d => y(d.y) + 26)
 				.text(d => labelFormatter(d.y));
 
 		// var triangles = svg.selectAll('.triangle')
